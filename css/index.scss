@@ -1,0 +1,56 @@
+@function getShadows($n) {
+  $shadows: "#{random(100)}vw #{random(100)}vh #fff";
+  @for $i from 2 through $n {
+    $shadows: "#{$shadows},#{random(100)}vw #{random(100)}vh #fff";
+  }
+  @return unquote($shadows);
+}
+.big_box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+$duration: 1000s;
+$count: 1000;
+@for $i from 1 through 6 {
+  $duration: floor($duration / 2);
+  $count: floor($count / 2);
+  .layer#{$i} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    $size: #{$i}px;
+    $deration: 5s;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    background: pink;
+    box-shadow: getShadows($count);
+    animation: moveup $duration linear infinite;
+    &::after {
+      content: "";
+      position: fixed;
+      width: inherit;
+      height: inherit;
+      left: 0;
+      top: 100vh;
+      border-radius: inherit;
+      box-shadow: inherit;
+    }
+  }
+}
+
+@keyframes moveup {
+  to {
+    transform: translateY(-100vh);
+  }
+}
+
+.comments_1 {
+  padding-left: 40px;
+}
+.comments {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 18px;
+}
